@@ -62,10 +62,10 @@ export function InteractiveBackground() {
       ctx.clearRect(0, 0, width, height)
 
       const bg = ctx.createLinearGradient(0, 0, 0, height)
-      bg.addColorStop(0, '#0d4f8b')
-      bg.addColorStop(0.35, '#0c739f')
-      bg.addColorStop(0.62, '#0d89b3')
-      bg.addColorStop(1, '#0b5b7f')
+      bg.addColorStop(0, '#050204')
+      bg.addColorStop(0.35, '#120606')
+      bg.addColorStop(0.6, '#490a0a')
+      bg.addColorStop(1, '#1b0505')
       ctx.fillStyle = bg
       ctx.fillRect(0, 0, width, height)
 
@@ -82,7 +82,7 @@ export function InteractiveBackground() {
         for (let i = 0; i < ringCount; i++) {
           const ringRadius = ripple.radius + i * 18
           const ringAlpha = ripple.opacity * (1 - i / ringCount) * 0.38
-          ctx.strokeStyle = `rgba(235, 245, 255, ${ringAlpha})`
+          ctx.strokeStyle = `rgba(255, 100, 100, ${ringAlpha})`
           ctx.lineWidth = 1.2 * (1 - i / ringCount)
           ctx.beginPath()
           ctx.ellipse(ripple.x, ripple.y, ringRadius, ringRadius * 0.52, 0, 0, Math.PI * 2)
@@ -97,9 +97,9 @@ export function InteractiveBackground() {
           ripple.y,
           ripple.radius * 0.6
         )
-        glow.addColorStop(0, `rgba(255,255,255,${ripple.opacity * 0.16})`)
-        glow.addColorStop(0.45, `rgba(173,216,230,${ripple.opacity * 0.06})`)
-        glow.addColorStop(1, 'rgba(173,216,230,0)')
+        glow.addColorStop(0, `rgba(255, 90, 90, ${ripple.opacity * 0.18})`)
+        glow.addColorStop(0.45, `rgba(195, 45, 45, ${ripple.opacity * 0.12})`)
+        glow.addColorStop(1, 'rgba(120, 18, 18, 0)')
         ctx.fillStyle = glow
         ctx.fillRect(
           ripple.x - ripple.radius * 0.65,
@@ -118,9 +118,9 @@ export function InteractiveBackground() {
           mousePos.current.y,
           120
         )
-        spotlight.addColorStop(0, 'rgba(255, 255, 255, 0.16)')
-        spotlight.addColorStop(0.35, 'rgba(173, 216, 230, 0.08)')
-        spotlight.addColorStop(1, 'rgba(173, 216, 230, 0)')
+        spotlight.addColorStop(0, 'rgba(255, 100, 100, 0.18)')
+        spotlight.addColorStop(0.35, 'rgba(190, 30, 30, 0.1)')
+        spotlight.addColorStop(1, 'rgba(120, 10, 10, 0)')
         ctx.fillStyle = spotlight
         ctx.fillRect(mousePos.current.x - 120, mousePos.current.y - 120, 240, 240)
       }

@@ -87,58 +87,112 @@ export function InteractiveBackground() {
         points[i].height += leftDeltas[i] + rightDeltas[i]
       }
 
-      // Clear canvas
+      // Clear canvas with water-like gradient
       const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height)
-      bgGradient.addColorStop(0, '#0f172a') // slate-900
-      bgGradient.addColorStop(0.5, '#020817') // slate-950
-      bgGradient.addColorStop(1, '#020817')
+      bgGradient.addColorStop(0, '#064e89') // deep water at top
+      bgGradient.addColorStop(0.3, '#0e5a97')
+      bgGradient.addColorStop(0.5, '#087aa2')
+      bgGradient.addColorStop(0.7, '#0d7fa8')
+      bgGradient.addColorStop(1, '#0a4d6d') // darkest at bottom
       ctx.fillStyle = bgGradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      // Draw water surface
-      const waveBaseY = canvas.height * 0.45
-      const waveAmplitude = 30
+      // Draw multiple wave layers for depth
+      const drawWaveLayer = (baseY: number, amplitude: number, opacity: number, strokeColor: string) => {
+        ctx.beginPath()
+        ctx.moveTo(0, baseY)
 
+        const points = wavePoints.current
+        for (let i = 0; i < points.length; i++) {
+          const y = baseY + points[i].height * (amplitude / 30)
+          ctx.lineTo(i, y)
+        }
+
+        ctx.lineTo(canvas.width, canvas.height)
+        ctx.lineTo(0, canvas.height)
+        ctx.closePath()
+
+        // Water fill with gradient
+        const waterGradient = ctx.createLinearGradient(0, baseY, 0, canvas.height)
+        waterGradient.addColorStop(0, `rgba(6, 182, 212, ${opacity * 0.2})`)
+        waterGradient.addColorStop(0.3, `rgba(6, 182, 212, ${opacity * 0.12})`)
+        waterGradient.addColorStop(0.7, `rgba(3, 102, 214, ${opacity * 0.08})`)
+        waterGradient.addColorStop(1, 'rgba(2, 8, 23, 0)')
+        ctx.fillStyle = waterGradient
+        ctx.fill()
+
+        // Wave outline
+        ctx.beginPath()
+        ctx.moveTo(0, baseY)
+        for (let i = 0; i < points.length; i++) {
+          const y = baseY + points[i].height * (amplitude / 30)
+          ctx.lineTo(i, y)
+        }
+        ctx.strokeStyle = strokeColor
+        ctx.lineWidth = 1.5
+        ctx.stroke()
+      }
+
+      // Draw main water surface across entire screen
       ctx.beginPath()
-      ctx.moveTo(0, waveBaseY)
+      ctx.moveTo(0, 0)
 
+      const points = wavePoints.current
       for (let i = 0; i < points.length; i++) {
-        const y = waveBaseY + points[i].height
+        const y = points[i].height * 0.5
         ctx.lineTo(i, y)
       }
 
-      // Fill water
-      ctx.lineTo(canvas.width, canvas.height)
-      ctx.lineTo(0, canvas.height)
+      ctx.lineTo(canvas.width, 0)
       ctx.closePath()
 
-      // Water gradient fill
-      const waterGradient = ctx.createLinearGradient(0, waveBaseY, 0, canvas.height)
-      waterGradient.addColorStop(0, 'rgba(6, 182, 212, 0.25)')
-      waterGradient.addColorStop(0.3, 'rgba(6, 182, 212, 0.15)')
-      waterGradient.addColorStop(0.7, 'rgba(3, 102, 214, 0.1)')
-      waterGradient.addColorStop(1, 'rgba(2, 8, 23, 0.4)')
-      ctx.fillStyle = waterGradient
+      // Main water fill - full screen
+      const mainWaterGradient = ctx.createLinearGradient(0, 0, 0, canvas.height)
+      mainWaterGradient.addColorStop(0, 'rgba(6, 182, 212, 0.3)')
+      mainWaterGradient.addColorStop(0.2, 'rgba(6, 182, 212, 0.25)')
+      mainWaterGradient.addColorStop(0.4, 'rgba(6, 182, 212, 0.15)')
+      mainWaterGradient.addColorStop(0.6, 'rgba(3, 102, 214, 0.1)')
+      mainWaterGradient.addColorStop(0.8, 'rgba(3, 102, 214, 0.05)')
+      mainWaterGradient.addColorStop(1, 'rgba(2, 8, 23, 0)')
+      ctx.fillStyle = mainWaterGradient
       ctx.fill()
 
-      // Draw wave outline
+      // Wave surface line
       ctx.beginPath()
-      ctx.moveTo(0, waveBaseY)
+      ctx.moveTo(0, 0)
       for (let i = 0; i < points.length; i++) {
-        const y = waveBaseY + points[i].height
+        const y = points[i].height * 0.5
         ctx.lineTo(i, y)
       }
-      ctx.strokeStyle = 'rgba(6, 182, 212, 0.4)'
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.6)'
       ctx.lineWidth = 2.5
       ctx.stroke()
 
-      // Add subtle shimmer/light
-      const shineGradient = ctx.createLinearGradient(0, waveBaseY - 20, 0, waveBaseY + 20)
+      // Add caustic/refraction patterns for depth perception
+      for (let y = 0; y < canvas.height; y += 80) {
+        const depthFactor = y / canvas.height
+        const waveOffset = Math.sin(time.current * 0.5 + y * 0.01) * 3
+        
+        ctx.strokeStyle = `rgba(6, 182, 212, ${0.1 * (1 - depthFactor * 0.5)})`
+        ctx.lineWidth = 1
+        ctx.beginPath()
+        ctx.moveTo(0, y + waveOffset)
+        
+        for (let x = 0; x < canvas.width; x += 40) {
+          const height = Math.sin(x * 0.02 + time.current * 0.3) * 4
+          ctx.lineTo(x, y + height + waveOffset)
+        }
+        ctx.lineTo(canvas.width, y + waveOffset)
+        ctx.stroke()
+      }
+
+      // Add shimmer/highlights on water surface
+      const shineGradient = ctx.createLinearGradient(0, -20, 0, 40)
       shineGradient.addColorStop(0, 'rgba(255, 255, 255, 0)')
-      shineGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.05)')
+      shineGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.08)')
       shineGradient.addColorStop(1, 'rgba(255, 255, 255, 0)')
       ctx.fillStyle = shineGradient
-      ctx.fillRect(0, waveBaseY - 20, canvas.width, 40)
+      ctx.fillRect(0, -20, canvas.width, 60)
 
       // Add mouse glow
       const glowGradient = ctx.createRadialGradient(
@@ -147,10 +201,10 @@ export function InteractiveBackground() {
         0,
         mousePos.current.x,
         mousePos.current.y,
-        250
+        300
       )
-      glowGradient.addColorStop(0, 'rgba(6, 182, 212, 0.15)')
-      glowGradient.addColorStop(0.5, 'rgba(6, 182, 212, 0.05)')
+      glowGradient.addColorStop(0, 'rgba(6, 182, 212, 0.2)')
+      glowGradient.addColorStop(0.4, 'rgba(6, 182, 212, 0.08)')
       glowGradient.addColorStop(1, 'rgba(6, 182, 212, 0)')
       ctx.fillStyle = glowGradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)

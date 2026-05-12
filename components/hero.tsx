@@ -1,104 +1,66 @@
 'use client'
 
-import { portfolioData } from '@/lib/data'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { ChevronDown } from 'lucide-react'
 
 export function Hero() {
-  const [displayText, setDisplayText] = useState('')
-  const fullText = "Booting SOC Interface..."
-
-  useEffect(() => {
-    let index = 0
-    const interval = setInterval(() => {
-      if (index <= fullText.length) {
-        setDisplayText(fullText.slice(0, index))
-        index++
-      } else {
-        clearInterval(interval)
-      }
-    }, 60)
-    return () => clearInterval(interval)
-  }, [])
-
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center pt-16 px-4 sm:px-6 lg:px-8 bg-slate-950 relative overflow-hidden">
-      {/* Animated Grid Background */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'linear-gradient(to right, rgba(6, 182, 212, 0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(6, 182, 212, 0.2) 1px, transparent 1px)',
-          backgroundSize: '40px 40px'
-        }}></div>
-      </div>
+    <section id="home" className="min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 bg-slate-950 relative overflow-hidden">
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 opacity-40"></div>
+      
+      {/* Minimal accent elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
 
-      {/* Glow effects */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500 rounded-full blur-3xl opacity-5"></div>
-      <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl opacity-5"></div>
-
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
-        {/* Terminal-style top bar */}
-        <div className="mb-12 inline-block">
-          <div className="bg-slate-900/50 border border-cyan-500/50 rounded-t-lg px-4 py-2 text-xs text-cyan-400 font-mono backdrop-blur-sm">
-            $ <span className="text-green-400">portfolio_interface</span> --init
-          </div>
-        </div>
-
-        {/* Main Title with typing effect */}
-        <div className="mb-8">
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white font-mono tracking-wider mb-6">
-            <span className="text-cyan-400">{displayText}</span>
-            <span className="animate-pulse text-cyan-400">▊</span>
-          </h1>
-
-          {/* Name and Role */}
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-3">
+      <div className="relative z-10 max-w-5xl mx-auto text-center">
+        {/* Main Heading */}
+        <div className="mb-12">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
             Mohamed Aziz Aguir
-          </h2>
-          <p className="text-lg md:text-xl text-cyan-300 font-mono mb-4">
+          </h1>
+          <p className="text-lg sm:text-xl text-slate-400 font-medium mb-8">
             Cybersecurity Engineering Student
           </p>
-
-          {/* Tech Badges */}
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
-            <span className="px-3 py-1 bg-purple-500/20 border border-purple-500/50 rounded text-purple-300 text-sm font-mono">SOC</span>
-            <span className="px-3 py-1 bg-blue-500/20 border border-blue-500/50 rounded text-blue-300 text-sm font-mono">SIEM</span>
-            <span className="px-3 py-1 bg-green-500/20 border border-green-500/50 rounded text-green-300 text-sm font-mono">CTI</span>
-            <span className="px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded text-orange-300 text-sm font-mono">DevSecOps</span>
+          
+          {/* Expertise Areas */}
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            <span className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-full text-slate-300 text-sm font-medium hover:border-cyan-500/50 transition-colors">
+              SOC Operations
+            </span>
+            <span className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-full text-slate-300 text-sm font-medium hover:border-cyan-500/50 transition-colors">
+              Threat Intelligence
+            </span>
+            <span className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-full text-slate-300 text-sm font-medium hover:border-cyan-500/50 transition-colors">
+              DevSecOps
+            </span>
           </div>
         </div>
 
         {/* Description */}
-        <p className="text-base md:text-lg text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-          Cybersecurity engineering student specializing in SOC operations, SIEM engineering, Cyber Threat Intelligence, and DevSecOps. 
-          Strong hands-on experience with detection engineering, incident response automation, and security infrastructure.
+        <p className="text-base sm:text-lg text-slate-400 mb-12 max-w-3xl mx-auto leading-relaxed">
+          Specializing in Security Operations Center management, SIEM engineering, Cyber Threat Intelligence, and incident response automation. Hands-on experience building detection rules, automating workflows, and securing infrastructure.
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
           <Link
             href="#projects"
-            className="px-8 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-all duration-200 font-semibold border border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/50"
+            className="px-8 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-cyan-600/50 active:scale-95"
           >
-            Explore Systems
+            View My Work
           </Link>
           <Link
             href="#contact"
-            className="px-8 py-3 border border-cyan-500/50 text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10 rounded-lg transition-all duration-200 font-semibold"
+            className="px-8 py-3 border border-slate-700 hover:border-slate-600 text-slate-300 hover:text-white font-semibold rounded-lg transition-all duration-300 hover:bg-slate-900/50 active:scale-95"
           >
             Get In Touch
           </Link>
         </div>
 
-        {/* System Status */}
-        <div className="text-xs text-slate-400 font-mono inline-block bg-slate-900/50 border border-slate-700 rounded px-4 py-2">
-          <span className="text-green-400">●</span> All Systems Online
-        </div>
-
         {/* Scroll indicator */}
-        <div className="animate-bounce mt-16">
-          <svg className="w-6 h-6 mx-auto text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
+        <div className="animate-bounce flex justify-center">
+          <ChevronDown className="w-6 h-6 text-slate-500" />
         </div>
       </div>
     </section>

@@ -48,9 +48,3 @@ export default function RootLayout({
     </html>
   )
 }
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
-      </body>
-    </html>
-  )
-}

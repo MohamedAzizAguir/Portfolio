@@ -9,8 +9,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Mohamed Aziz Aguir - Cybersecurity Student & Final Year Intern at DOT IT Sousse',
-  description: 'Portfolio of Mohamed Aziz Aguir, a cybersecurity engineering student completing final year internship at DOT IT Sousse, Tunisia. Specializing in SOC operations, Cyber Threat Intelligence, and DevSecOps.',
+  title: 'Mohamed Aziz Aguir - DevSecOps Intern at DOT IT Sousse',
+  description: 'Portfolio of Mohamed Aziz Aguir, a DevSecOps engineering student working in Sousse. Specializing in secure CI/CD, SOC operations, Cyber Threat Intelligence, and automation.',
   generator: 'v0.app',
   keywords: ['cybersecurity', 'SOC', 'CTI', 'DevSecOps', 'threat intelligence', 'security engineering', 'Tunisia'],
   icons: {

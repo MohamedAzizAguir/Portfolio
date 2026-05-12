@@ -18,21 +18,17 @@ export function Hero() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 backdrop-blur-sm">
             <div className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
               <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
-              <span>Final Year Internship • DOT IT Sousse, Tunisia</span>
-            </div>
-          </div>
-        </div>
-
+              <span>DevSecOps Internship • DOT IT Sousse, Tunisia</span>
         {/* Main Heading */}
         <div className="mb-12 animate-fade-in" style={{ animationDelay: '0.1s' }}>
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
             Mohamed Aziz Aguir
           </h1>
           <p className="text-xl sm:text-2xl text-slate-300 font-semibold mb-4">
-            Cybersecurity Engineering Student
+            DevSecOps & Cybersecurity Engineering Student
           </p>
           <p className="text-base sm:text-lg text-slate-400 mb-6">
-            Building secure infrastructure • Detecting threats • Automating responses
+            Securing CI/CD, hardening infrastructure, and automating threat response in Sousse.
           </p>
         </div>
 
@@ -50,7 +46,7 @@ export function Hero() {
               <Briefcase className="w-5 h-5 text-cyan-400" />
               <span className="text-slate-400 text-sm font-medium">Internship</span>
             </div>
-            <p className="text-slate-300 text-sm">Security Operations</p>
+            <p className="text-slate-300 text-sm">DevSecOps Engineering</p>
           </div>
           <div className="px-6 py-4 bg-slate-900/40 border border-slate-800/50 rounded-lg backdrop-blur-sm hover:border-cyan-500/30 transition-all duration-300">
             <div className="flex items-center justify-center gap-3 mb-2">

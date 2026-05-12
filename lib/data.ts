@@ -1,8 +1,8 @@
 export const portfolioData = {
   // Personal Info
   name: "Mohamed Aziz Aguir",
-  title: "Cybersecurity Engineering Student",
-  bio: "Cybersecurity engineering student specializing in SOC operations, SIEM engineering, Cyber Threat Intelligence (CTI), and DevSecOps, with strong hands-on project experience and industry internship at Capgemini Engineering.",
+  title: "DevSecOps & Cybersecurity Engineering Student",
+  bio: "DevSecOps and cybersecurity engineering student working in Sousse with hands-on experience in SOC operations, CI/CD security, threat intelligence, and automation.",
   email: "mohamedaziz.aguir@outlook.com",
   github: "https://github.com/Mohamed-Aziz-Aguir",
   linkedin: "https://www.linkedin.com/in/mohamedazizaguir/",
@@ -10,8 +10,8 @@ export const portfolioData = {
 
   // Hero section
   hero: {
-    headline: "Booting SOC Interface...",
-    subheadline: "SOC | SIEM | CTI | DevSecOps",
+    headline: "Booting DevSecOps Interface...",
+    subheadline: "DevSecOps | SOC | CTI | Automation",
     cta: "Explore Systems",
   },
 

@@ -2,7 +2,7 @@ import { portfolioData } from '@/lib/data'
 
 export function SocSection() {
   return (
-    <section id="soc" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
+    <section id="soc" className="py-24 px-4 sm:px-6 lg:px-8 relative">
       {/* Background accent */}
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
 

@@ -39,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="font-sans antialiased bg-slate-950 text-slate-100 overflow-x-hidden">
+      <body className="font-sans antialiased text-slate-100 overflow-x-hidden">
         <InteractiveBackground />
         <MouseSpotlight />
         {children}

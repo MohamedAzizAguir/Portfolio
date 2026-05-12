@@ -3,7 +3,7 @@ import { Github, Linkedin, Mail, ExternalLink, ArrowRight } from 'lucide-react'
 
 export function ContactSection() {
   return (
-    <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
+    <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 relative">
       {/* Background accent */}
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl pointer-events-none"></div>
 

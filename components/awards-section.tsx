@@ -3,7 +3,7 @@ import { Star, Zap } from 'lucide-react'
 
 export function AwardsSection() {
   return (
-    <section id="awards" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
+    <section id="awards" className="py-20 px-4 sm:px-6 lg:px-8 relative">
       {/* Background accent */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none"></div>
 

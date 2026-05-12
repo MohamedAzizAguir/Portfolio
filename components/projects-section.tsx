@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
+    <section id="projects" className="py-24 px-4 sm:px-6 lg:px-8 relative">
       {/* Background accent */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
 

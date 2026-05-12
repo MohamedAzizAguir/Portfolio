@@ -97,47 +97,10 @@ export function InteractiveBackground() {
       ctx.fillStyle = bgGradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      // Draw multiple wave layers for depth
-      const drawWaveLayer = (baseY: number, amplitude: number, opacity: number, strokeColor: string) => {
-        ctx.beginPath()
-        ctx.moveTo(0, baseY)
-
-        const points = wavePoints.current
-        for (let i = 0; i < points.length; i++) {
-          const y = baseY + points[i].height * (amplitude / 30)
-          ctx.lineTo(i, y)
-        }
-
-        ctx.lineTo(canvas.width, canvas.height)
-        ctx.lineTo(0, canvas.height)
-        ctx.closePath()
-
-        // Water fill with gradient
-        const waterGradient = ctx.createLinearGradient(0, baseY, 0, canvas.height)
-        waterGradient.addColorStop(0, `rgba(6, 182, 212, ${opacity * 0.2})`)
-        waterGradient.addColorStop(0.3, `rgba(6, 182, 212, ${opacity * 0.12})`)
-        waterGradient.addColorStop(0.7, `rgba(3, 102, 214, ${opacity * 0.08})`)
-        waterGradient.addColorStop(1, 'rgba(2, 8, 23, 0)')
-        ctx.fillStyle = waterGradient
-        ctx.fill()
-
-        // Wave outline
-        ctx.beginPath()
-        ctx.moveTo(0, baseY)
-        for (let i = 0; i < points.length; i++) {
-          const y = baseY + points[i].height * (amplitude / 30)
-          ctx.lineTo(i, y)
-        }
-        ctx.strokeStyle = strokeColor
-        ctx.lineWidth = 1.5
-        ctx.stroke()
-      }
-
       // Draw main water surface across entire screen
       ctx.beginPath()
       ctx.moveTo(0, 0)
 
-      const points = wavePoints.current
       for (let i = 0; i < points.length; i++) {
         const y = points[i].height * 0.5
         ctx.lineTo(i, y)

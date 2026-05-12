@@ -5,11 +5,8 @@ import { useEffect, useRef } from 'react'
 export function InteractiveBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mousePos = useRef({ x: 0, y: 0 })
-  const waveData = useRef<{ current: number[], previous: number[], damping: number }>({
-    current: [],
-    previous: [],
-    damping: 0.995,
-  })
+  const wavePoints = useRef<{ height: number; velocity: number }[]>([])
+  const time = useRef(0)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -23,10 +20,12 @@ export function InteractiveBackground() {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
       
-      // Reset wave data on resize
-      const width = canvas.width
-      waveData.current.current = new Array(width).fill(0)
-      waveData.current.previous = new Array(width).fill(0)
+      // Initialize wave points
+      const numPoints = canvas.width
+      wavePoints.current = Array(numPoints).fill(0).map(() => ({
+        height: 0,
+        velocity: 0,
+      }))
     }
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
@@ -36,114 +35,124 @@ export function InteractiveBackground() {
       mousePos.current = { x: e.clientX, y: e.clientY }
 
       // Create wave disturbance at mouse position
-      const width = canvas.width
-      const x = Math.floor((e.clientX / width) * width)
-      const spreadRadius = 30
+      const x = Math.floor(e.clientX)
+      const spreadRadius = 40
 
       for (let i = -spreadRadius; i <= spreadRadius; i++) {
         const idx = x + i
-        if (idx >= 0 && idx < width) {
+        if (idx >= 0 && idx < wavePoints.current.length) {
           const distance = Math.abs(i)
-          const force = Math.max(0, 1 - distance / spreadRadius) * 15
-          waveData.current.current[idx] += force
+          const force = Math.max(0, 1 - distance / spreadRadius) * 8
+          wavePoints.current[idx].velocity += force
         }
       }
     }
 
     window.addEventListener('mousemove', handleMouseMove)
 
-    // Wave simulation
-    const simulateWaves = () => {
-      const width = canvas.width
-      const current = waveData.current.current
-      const previous = waveData.current.previous
-      const damping = waveData.current.damping
-
-      // Wave equation simulation
-      for (let i = 1; i < width - 1; i++) {
-        const leftDelta = (current[i - 1] - current[i]) * 0.25
-        const rightDelta = (current[i + 1] - current[i]) * 0.25
-        const change = leftDelta + rightDelta
-
-        previous[i] += change
-        previous[i] *= damping
-      }
-
-      // Swap buffers
-      const temp = waveData.current.current
-      waveData.current.current = previous
-      waveData.current.previous = temp
-
-      // Add gravity (restore to zero)
-      for (let i = 0; i < width; i++) {
-        current[i] += (0 - current[i]) * 0.01
-      }
-    }
-
     // Animation loop
     const animate = () => {
-      simulateWaves()
+      time.current += 0.016 // ~60fps
 
-      // Clear canvas with gradient background
+      // Update wave physics
+      const points = wavePoints.current
+      const k = 0.025 // Spring constant
+      const damping = 0.98 // Damping factor
+      const spread = 0.25 // Spread to neighbors
+
+      // Update velocities and positions
+      for (let i = 0; i < points.length; i++) {
+        // Spring force - pull back to zero
+        const force = -k * points[i].height
+        points[i].velocity += force
+        
+        // Apply velocity
+        points[i].height += points[i].velocity
+        
+        // Apply damping
+        points[i].velocity *= damping
+      }
+
+      // Spread to neighbors
+      const leftDeltas = new Array(points.length).fill(0)
+      const rightDeltas = new Array(points.length).fill(0)
+
+      for (let i = 0; i < points.length - 1; i++) {
+        const delta = spread * (points[i].height - points[i + 1].height)
+        leftDeltas[i + 1] += delta
+        rightDeltas[i] -= delta
+      }
+
+      for (let i = 0; i < points.length; i++) {
+        points[i].height += leftDeltas[i] + rightDeltas[i]
+      }
+
+      // Clear canvas
       const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height)
       bgGradient.addColorStop(0, '#0f172a') // slate-900
       bgGradient.addColorStop(0.5, '#020817') // slate-950
-      bgGradient.addColorStop(1, '#020817') // slate-950
+      bgGradient.addColorStop(1, '#020817')
       ctx.fillStyle = bgGradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      // Draw water waves with gradient
-      const waveGradient = ctx.createLinearGradient(0, canvas.height * 0.3, 0, canvas.height)
-      waveGradient.addColorStop(0, 'rgba(6, 182, 212, 0.15)') // cyan-500 with transparency
-      waveGradient.addColorStop(0.3, 'rgba(6, 182, 212, 0.1)')
-      waveGradient.addColorStop(0.6, 'rgba(3, 102, 214, 0.08)') // blue-600
-      waveGradient.addColorStop(1, 'rgba(2, 8, 23, 0.3)') // slate-950
+      // Draw water surface
+      const waveBaseY = canvas.height * 0.45
+      const waveAmplitude = 30
 
-      ctx.fillStyle = waveGradient
       ctx.beginPath()
-      ctx.moveTo(0, canvas.height * 0.5)
+      ctx.moveTo(0, waveBaseY)
 
-      // Draw wave path
-      const current = waveData.current.current
-      const waveHeight = canvas.height * 0.25
-      const centerY = canvas.height * 0.5
-
-      for (let x = 0; x < canvas.width; x++) {
-        const waveOffset = (current[x] || 0) * 0.3
-        ctx.lineTo(x, centerY + waveOffset)
+      for (let i = 0; i < points.length; i++) {
+        const y = waveBaseY + points[i].height
+        ctx.lineTo(i, y)
       }
 
+      // Fill water
       ctx.lineTo(canvas.width, canvas.height)
       ctx.lineTo(0, canvas.height)
       ctx.closePath()
+
+      // Water gradient fill
+      const waterGradient = ctx.createLinearGradient(0, waveBaseY, 0, canvas.height)
+      waterGradient.addColorStop(0, 'rgba(6, 182, 212, 0.25)')
+      waterGradient.addColorStop(0.3, 'rgba(6, 182, 212, 0.15)')
+      waterGradient.addColorStop(0.7, 'rgba(3, 102, 214, 0.1)')
+      waterGradient.addColorStop(1, 'rgba(2, 8, 23, 0.4)')
+      ctx.fillStyle = waterGradient
       ctx.fill()
 
-      // Add wave line effect
-      ctx.strokeStyle = 'rgba(6, 182, 212, 0.3)'
-      ctx.lineWidth = 2
+      // Draw wave outline
       ctx.beginPath()
-      ctx.moveTo(0, centerY)
-
-      for (let x = 0; x < canvas.width; x++) {
-        const waveOffset = (current[x] || 0) * 0.3
-        ctx.lineTo(x, centerY + waveOffset)
+      ctx.moveTo(0, waveBaseY)
+      for (let i = 0; i < points.length; i++) {
+        const y = waveBaseY + points[i].height
+        ctx.lineTo(i, y)
       }
-
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.4)'
+      ctx.lineWidth = 2.5
       ctx.stroke()
 
-      // Add glow at mouse position
-      const gradient = ctx.createRadialGradient(
+      // Add subtle shimmer/light
+      const shineGradient = ctx.createLinearGradient(0, waveBaseY - 20, 0, waveBaseY + 20)
+      shineGradient.addColorStop(0, 'rgba(255, 255, 255, 0)')
+      shineGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.05)')
+      shineGradient.addColorStop(1, 'rgba(255, 255, 255, 0)')
+      ctx.fillStyle = shineGradient
+      ctx.fillRect(0, waveBaseY - 20, canvas.width, 40)
+
+      // Add mouse glow
+      const glowGradient = ctx.createRadialGradient(
         mousePos.current.x,
         mousePos.current.y,
         0,
         mousePos.current.x,
         mousePos.current.y,
-        200
+        250
       )
-      gradient.addColorStop(0, 'rgba(6, 182, 212, 0.2)')
-      gradient.addColorStop(0.5, 'rgba(6, 182, 212, 0.05)')
-      gradient.addColorStop(1, 'rgba(6, 182, 212, 0)')
-      ctx.fillStyle = gradient
+      glowGradient.addColorStop(0, 'rgba(6, 182, 212, 0.15)')
+      glowGradient.addColorStop(0.5, 'rgba(6, 182, 212, 0.05)')
+      glowGradient.addColorStop(1, 'rgba(6, 182, 212, 0)')
+      ctx.fillStyle = glowGradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       requestAnimationFrame(animate)

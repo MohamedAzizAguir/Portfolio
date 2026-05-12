@@ -201,14 +201,6 @@ export function InteractiveBackground() {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('resize', resizeCanvas)
     }
-    }
-
-    animate()
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('resize', resizeCanvas)
-    }
   }, [])
 
   return (

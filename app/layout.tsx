@@ -1,16 +1,18 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { InteractiveBackground } from '@/components/interactive-background'
+import { MouseSpotlight } from '@/components/mouse-spotlight'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Mohamed Aziz Aguir - SOC/CTI Engineer & DevSecOps Specialist',
-  description: 'Portfolio of Mohamed Aziz Aguir, a cybersecurity professional specializing in SOC operations, Cyber Threat Intelligence, and DevSecOps.',
+  title: 'Mohamed Aziz Aguir - Cybersecurity Student & Final Year Intern at DOT IT Sousse',
+  description: 'Portfolio of Mohamed Aziz Aguir, a cybersecurity engineering student completing final year internship at DOT IT Sousse, Tunisia. Specializing in SOC operations, Cyber Threat Intelligence, and DevSecOps.',
   generator: 'v0.app',
-  keywords: ['cybersecurity', 'SOC', 'CTI', 'DevSecOps', 'threat intelligence', 'security engineering'],
+  keywords: ['cybersecurity', 'SOC', 'CTI', 'DevSecOps', 'threat intelligence', 'security engineering', 'Tunisia'],
   icons: {
     icon: [
       {
@@ -37,7 +39,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="font-sans antialiased bg-slate-950 text-slate-100">
+      <body className="font-sans antialiased bg-slate-950 text-slate-100 overflow-x-hidden">
+        <InteractiveBackground />
+        <MouseSpotlight />
+        {children}
+        {process.env.NODE_ENV === 'production' && <Analytics />}
+      </body>
+    </html>
+  )
+}
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

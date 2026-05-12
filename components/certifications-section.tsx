@@ -3,10 +3,13 @@ import { ExternalLink, Award } from 'lucide-react'
 
 export function CertificationsSection() {
   return (
-    <section id="certifications" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950">
-      <div className="max-w-6xl mx-auto">
+    <section id="certifications" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
+      {/* Background accent */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="mb-16">
+        <div className="mb-16 animate-slide-up">
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-white">
             Certifications
           </h2>
@@ -17,17 +20,18 @@ export function CertificationsSection() {
 
         {/* Certifications Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {portfolioData.certifications.map((cert) => (
+          {portfolioData.certifications.map((cert, index) => (
             <a
               key={cert.id}
               href={cert.credentialUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-lg border border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 transition-all p-6 flex items-start gap-4 cursor-pointer"
+              className="group rounded-lg border border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 transition-all p-6 flex items-start gap-4 cursor-pointer animate-slide-up hover-lift"
+              style={{ animationDelay: `${index * 0.05}s` }}
             >
               {/* Icon */}
-              <div className="p-3 rounded-lg bg-slate-800/50 group-hover:bg-slate-700 transition-colors flex-shrink-0">
-                <Award className="w-5 h-5 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+              <div className="p-3 rounded-lg bg-slate-800/50 group-hover:bg-slate-700 group-hover:text-cyan-400 transition-all text-slate-500 flex-shrink-0">
+                <Award className="w-5 h-5 transition-colors" />
               </div>
 
               {/* Content */}

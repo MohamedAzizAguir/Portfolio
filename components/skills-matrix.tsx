@@ -4,10 +4,13 @@ import { portfolioData } from '@/lib/data'
 
 export function SkillsMatrix() {
   return (
-    <section id="skills" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950">
-      <div className="max-w-6xl mx-auto">
+    <section id="skills" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
+      {/* Background accent */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="mb-16">
+        <div className="mb-16 animate-slide-up">
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-white">
             Skills & Expertise
           </h2>
@@ -21,7 +24,8 @@ export function SkillsMatrix() {
           {portfolioData.skills.map((skillGroup, index) => (
             <div
               key={index}
-              className="rounded-lg border border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 transition-all duration-300 p-6"
+              className="rounded-lg border border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 transition-all duration-300 p-6 animate-slide-up hover-lift"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               <h3 className="text-lg font-bold text-white mb-4">
                 {skillGroup.category}
@@ -31,7 +35,7 @@ export function SkillsMatrix() {
                 {skillGroup.items.map((skill, idx) => (
                   <span
                     key={idx}
-                    className="px-4 py-2 bg-slate-800/50 text-slate-300 rounded-full text-sm font-medium hover:bg-slate-700 transition-colors"
+                    className="px-4 py-2 bg-slate-800/50 text-slate-300 rounded-full text-sm font-medium hover:bg-slate-700 hover:text-cyan-400 transition-all duration-300 cursor-default"
                   >
                     {skill}
                   </span>
@@ -42,12 +46,12 @@ export function SkillsMatrix() {
         </div>
 
         {/* Proficiency Levels */}
-        <div className="rounded-lg border border-slate-800 bg-slate-900/30 p-8">
+        <div className="rounded-lg border border-slate-800 bg-slate-900/30 p-8 animate-slide-up">
           <h3 className="text-xl font-bold text-white mb-8">Proficiency Matrix</h3>
 
           <div className="space-y-6">
             {portfolioData.skillsMatrix.map((skill, index) => (
-              <div key={index}>
+              <div key={index} className="animate-slide-up" style={{ animationDelay: `${index * 0.05}s` }}>
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-semibold text-slate-200 text-sm">{skill.skill}</span>
                   <span className="text-xs text-cyan-400 font-medium">{skill.level}%</span>

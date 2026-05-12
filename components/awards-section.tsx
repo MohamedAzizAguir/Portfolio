@@ -3,10 +3,13 @@ import { Star, Zap } from 'lucide-react'
 
 export function AwardsSection() {
   return (
-    <section id="awards" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-950">
-      <div className="max-w-6xl mx-auto">
+    <section id="awards" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
+      {/* Background accent */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="mb-16 text-center">
+        <div className="mb-16 text-center animate-slide-up">
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-slate-100">
             Awards & <span className="text-red-400">Recognition</span>
           </h2>
@@ -20,7 +23,8 @@ export function AwardsSection() {
           {portfolioData.awards.map((award, idx) => (
             <div
               key={award.id}
-              className="rounded-xl border border-red-700/30 bg-red-950/20 hover:border-red-500/50 hover:bg-red-950/30 transition-all p-8 group"
+              className="rounded-xl border border-red-700/30 bg-red-950/20 hover:border-red-500/50 hover:bg-red-950/30 transition-all p-8 group animate-slide-up hover-lift"
+              style={{ animationDelay: `${idx * 0.1}s` }}
             >
               {/* Top Row */}
               <div className="flex items-start justify-between mb-4">
@@ -60,12 +64,13 @@ export function AwardsSection() {
 
         {/* Experience Section */}
         <div className="mt-16">
-          <h3 className="text-3xl font-bold text-slate-100 mb-8">Professional Experience</h3>
+          <h3 className="text-3xl font-bold text-slate-100 mb-8 animate-slide-up">Professional Experience</h3>
           <div className="space-y-6">
             {portfolioData.experience.map((job, idx) => (
               <div
                 key={job.id}
-                className="rounded-xl border border-slate-700/50 bg-slate-800/30 hover:border-slate-600 hover:bg-slate-800/50 transition-all p-6"
+                className="rounded-xl border border-slate-700/50 bg-slate-800/30 hover:border-slate-600 hover:bg-slate-800/50 transition-all p-6 animate-slide-up hover-lift"
+                style={{ animationDelay: `${idx * 0.1}s` }}
               >
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-4 mb-4">
                   <div>

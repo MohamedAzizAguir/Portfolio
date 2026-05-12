@@ -2,10 +2,13 @@ import { portfolioData } from '@/lib/data'
 
 export function CtiSection() {
   return (
-    <section id="cti" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950">
-      <div className="max-w-6xl mx-auto">
+    <section id="cti" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
+      {/* Background accent */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="mb-16">
+        <div className="mb-16 animate-slide-up">
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-white">
             Cyber Threat Intelligence
           </h2>
@@ -17,7 +20,7 @@ export function CtiSection() {
         {/* Capabilities Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Intelligence Analysis */}
-          <div className="rounded-lg border border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 transition-all p-8">
+          <div className="rounded-lg border border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 transition-all p-8 animate-slide-up hover-lift">
             <h3 className="text-xl font-bold text-white mb-6">Intelligence Analysis</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
@@ -40,7 +43,7 @@ export function CtiSection() {
           </div>
 
           {/* IOC & Reporting */}
-          <div className="rounded-lg border border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 transition-all p-8">
+          <div className="rounded-lg border border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 transition-all p-8 animate-slide-up hover-lift" style={{ animationDelay: '0.1s' }}>
             <h3 className="text-xl font-bold text-white mb-6">IOC & Reporting</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
@@ -69,7 +72,8 @@ export function CtiSection() {
             {portfolioData.ctiStats.map((stat, idx) => (
               <div
                 key={idx}
-                className="rounded-lg border border-slate-800 bg-slate-900/30 p-4 text-center hover:bg-slate-900/60 transition-all"
+                className="rounded-lg border border-slate-800 bg-slate-900/30 p-4 text-center hover:bg-slate-900/60 transition-all animate-slide-up hover-lift"
+                style={{ animationDelay: `${idx * 0.05}s` }}
               >
                 <p className="text-slate-400 text-xs font-medium mb-2">{stat.label}</p>
                 <p className="text-2xl font-bold text-cyan-400">{stat.value}</p>

@@ -4,10 +4,13 @@ import { portfolioData } from '@/lib/data'
 
 export function ExperienceSection() {
   return (
-    <section id="experience" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950">
-      <div className="max-w-6xl mx-auto">
+    <section id="experience" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
+      {/* Background accent */}
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="mb-16">
+        <div className="mb-16 animate-slide-up">
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-white">
             Experience
           </h2>
@@ -21,7 +24,8 @@ export function ExperienceSection() {
           {portfolioData.experience.map((item, index) => (
             <div
               key={item.id}
-              className="rounded-lg border border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 transition-all duration-300 p-6 hover:border-slate-700"
+              className="rounded-lg border border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 transition-all duration-300 p-6 hover:border-slate-700 animate-slide-up hover-lift"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Header */}
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">

@@ -6,10 +6,13 @@ import Link from 'next/link'
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950">
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
+      {/* Background accent */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="mb-16">
+        <div className="mb-16 animate-slide-up">
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-white">
             Projects
           </h2>
@@ -20,13 +23,14 @@ export function ProjectsSection() {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {portfolioData.projects.map((project) => (
+          {portfolioData.projects.map((project, index) => (
             <a
               key={project.id}
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-lg border border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 transition-all duration-300 hover:border-slate-700 p-6 cursor-pointer"
+              className="group rounded-lg border border-slate-800 bg-slate-900/30 hover:bg-slate-900/60 transition-all duration-300 hover:border-slate-700 p-6 cursor-pointer animate-slide-up hover-lift"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Header */}
               <div className="mb-4 flex items-start justify-between">

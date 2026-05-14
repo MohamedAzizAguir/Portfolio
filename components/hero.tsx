@@ -19,6 +19,10 @@ export function Hero() {
             <div className="flex items-center gap-2 text-cyan-300 text-sm font-medium">
               <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
               <span>DevSecOps Internship • DOT IT Sousse, Tunisia</span>
+            </div>
+          </div>
+        </div>
+
         {/* Main Heading */}
         <div className="mb-12 animate-fade-in" style={{ animationDelay: '0.1s' }}>
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
